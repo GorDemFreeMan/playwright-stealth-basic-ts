@@ -4,7 +4,7 @@
   "main": "dist/main.js",
   "scripts": {
   "build": "rm -rf dist && tsc",
-    "start": "npm run build && node dist/main.js",
+  "start": "rm -rf dist && npm run build && node dist/main.js",
     "dev": "ts-node main.ts",
     "test": "npm run build && node dist/main.js"
   },
