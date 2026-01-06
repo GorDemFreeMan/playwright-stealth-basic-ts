@@ -1,4 +1,3 @@
-// src/main.ts
 import express from 'express';
 import { chromium } from 'playwright';
 
