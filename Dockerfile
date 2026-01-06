@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Build TypeScript
-RUN npm run build
+RUN rm -rf dist node_modules && npm install && npm run build
 
 # Set environment variables
 ENV NODE_ENV=production
