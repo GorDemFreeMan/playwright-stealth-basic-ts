@@ -10,8 +10,11 @@ COPY tsconfig.json ./
 # Install dependencies
 RUN npm install
 
-# Copy source code
-COPY . .
+# Remove old source and copy only new files
+RUN rm -rf src/ && true
+COPY src/ ./src/
+COPY main.ts ./
+COPY tsconfig.json ./
 
 # Build TypeScript
 RUN rm -rf dist node_modules && npm install && npm run build
