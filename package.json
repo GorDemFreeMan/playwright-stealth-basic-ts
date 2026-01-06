@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rm -rf dist && tsc",
     "start": "npm run build && node dist/main.js",
-    "dev": "ts-node src/main.ts"
+    "dev": "ts-node main.ts"
   },
   "dependencies": {
     "@types/node": "^22.15.29",
