@@ -1,8 +1,6 @@
 // src/main.ts
 import express from 'express';
 import { chromium } from 'playwright';
-import StealthPlugin from 'puppeteer-extra-plugin-stealth';
-import pExtra from 'playwright-extra';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -10,9 +8,6 @@ const app = express();
 // Middleware
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
-
-// Добавить stealth plugin
-pExtra.use(StealthPlugin());
 
 // Хранилище браузеров
 const activeBrowsers = new Map<string, any>();
@@ -29,34 +24,16 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Список инструментов для N8N
+// Список инструментов
 app.get('/tools', (req, res) => {
   res.json({
     tools: [
-      {
-        name: 'launch_browser',
-        description: 'Запустить браузер'
-      },
-      {
-        name: 'navigate',
-        description: 'Перейти на сайт'
-      },
-      {
-        name: 'get_content',
-        description: 'Получить контент страницы'
-      },
-      {
-        name: 'click',
-        description: 'Нажать на элемент'
-      },
-      {
-        name: 'screenshot',
-        description: 'Сделать скриншот'
-      },
-      {
-        name: 'close',
-        description: 'Закрыть браузер'
-      }
+      { name: 'launch_browser', description: 'Запустить браузер' },
+      { name: 'navigate', description: 'Перейти на сайт' },
+      { name: 'get_content', description: 'Получить контент страницы' },
+      { name: 'click', description: 'Нажать на элемент' },
+      { name: 'screenshot', description: 'Сделать скриншот' },
+      { name: 'close', description: 'Закрыть браузер' }
     ]
   });
 });
@@ -70,10 +47,10 @@ app.post('/browser/launch', async (req, res) => {
       return res.status(400).json({ error: 'Session exists' });
     }
 
-    const browser = await pExtra.launchChromium({
+    const browser = await chromium.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox']
-    }) as any;
+    });
 
     activeBrowsers.set(sessionId, {
       browser,
